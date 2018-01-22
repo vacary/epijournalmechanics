@@ -1,0 +1,344 @@
+\documentclass[8pt,red, compress]{beamer}
+\usepackage [french]{babel}
+\usepackage [utf8]{inputenc}
+\usepackage{fontenc}
+
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amsbsy,stmaryrd}
+\usepackage{subeqnarray}
+
+\usepackage{cases}
+
+\usepackage{pifont}
+
+\usepackage{fancyhdr}
+
+\usepackage{lastpage}
+\usepackage{subfigure}
+
+\usepackage{wrapfig}
+
+\usepackage{graphicx}
+\usepackage{subfloat}
+\usepackage{rotating}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning, shapes}
+
+
+%\usepackage{minted}
+\usepackage{color}
+
+%\usepackage{tikz-uml}
+% \usepackage{algorithm}
+% \usepackage{algorithmic}
+
+
+\newcommand<>{\fullsizegraphic}[1]{
+  \begin{textblock*}{0cm}(-1cm,-3.78cm)
+  \includegraphics[width=\paperwidth]{#1}
+  \end{textblock*}
+}
+\input{macro.tex}
+
+\usepackage{wasysym}
+
+
+
+\setbeamertemplate{theorem}[ams style]
+\setbeamertemplate{theorems}[numbered]
+\graphicspath{{./figure-Hots/},{./figure-BiolSyst/}}
+
+
+\input{theme.tex}
+\setbeamercolor{block title}{fg=red!90}
+\setbeamercolor{frame title}{fg=red!90}
+\setbeamerfont{itemize/enumerate body}{family=\sffamily, size={\fontsize{8}{8}}}
+\setbeamerfont{itemize/enumerate subbody}{family=\sffamily, size={\fontsize{8}{8}}}
+
+\title[Pour une épi-revue en Mécanique \\$ $ \\ {Vincent Acary, Mathias Legrand}]{{\huge Pour une épi-revue en Mécanique}}
+\author{Vincent Acary, Mathias Legrand \\ [2mm]
+Aussois 2018 – Colloque National MECAMAT}
+\date{\today}
+
+\setbeamertemplate 
+{footline} 
+{\quad\hfill\strut\insertsection\quad--\quad\insertframenumber/\inserttotalframenumber\strut\quad\quad} 
+
+
+\includeonly{%
+  introduction
+}
+
+
+
+%\newtheorem{defn}{Definition}
+%\renewcommand{\thedefn}{\arabic{defn}}
+% \newtheorem{thm}[defn]{Theorem}
+% \newtheorem{corr}[defn]{Corollary}
+% \newtheorem{ass}[defn]{Assumption}
+% \newtheorem{lem}[defn]{Lemma}
+% \newtheorem{rem}[defn]{Remark}
+% \newtheorem{hypo}[defn]{Hypotheses}
+% \newtheorem{exmp}[defn]{Example}
+% \newtheorem{prop}[defn]{Proposition}
+\newcommand{\diag}{\mbox{\rm diag}}
+\newcommand{\co}{\overline{\mathit{co}}}
+\newcommand{\rect}{\overline{\mathit{rect}}}
+\newcommand{\newb}{g}
+
+\renewcommand{\tr}[1]{\textcolor{red}{#1}}
+\usepackage{smartdiagram}
+
+
+\def\toto{date}
+\def\tutu{item}
+\makeatletter
+\NewDocumentCommand{\smartdiagramx}{r[] m}{%
+    \StrCut{#1}{:}\diagramtype\option
+    \IfStrEq{\diagramtype}{priority descriptive diagram}{% true-priority descriptive diagram
+        \pgfmathparse{subtract(\sm@core@priorityarrowwidth,\sm@core@priorityarrowheadextend)}
+        \pgfmathsetmacro\sm@core@priorityticksize{\pgfmathresult/2}
+        \pgfmathsetmacro\arrowtickxshift{(\sm@core@priorityarrowwidth-\sm@core@priorityticksize)/2}
+        \begin{tikzpicture}[every node/.style={align=center,let hypenation}]
+          \foreach \smitem [count=\xi] in {#2}{\global\let\maxsmitem\xi}
+        
+          \foreach \smitem [count=\xi] in {#2}{%
+            \StrCut{\smitem}{:}\toto\tutu
+            \edef\col{\@nameuse{color@\xi}}
+            \node[description,drop shadow](module\xi)
+            at (0,0+\xi*\sm@core@descriptiveitemsysep) {\tutu};
+            \draw[line width=\sm@core@prioritytick,{\@nameuse{color@3}}]
+            ([xshift=-\arrowtickxshift pt]module\xi.base west)--
+            ($([xshift=-\arrowtickxshift pt]module\xi.base west)-(\sm@core@priorityticksize pt,0)$) node[left]{\toto};
+          }%
+        \coordinate (A) at (module1);
+        \coordinate (B) at (module\maxsmitem);
+        \CalcHeight(A,B){heightmodules}
+        \pgfmathadd{\heightmodules}{\sm@core@priorityarrowheightadvance}
+        \pgfmathsetmacro{\distancemodules}{\pgfmathresult}
+        \pgfmathsetmacro\arrowxshift{\sm@core@priorityarrowwidth/2}
+        \begin{pgfonlayer}{background}
+        \node[priority arrow,rotate=180,transform shape] at ([xshift=-\arrowxshift pt]module\maxsmitem.north west){};
+        \end{pgfonlayer}
+        \end{tikzpicture}
+    }{}% end-priority descriptive diagram
+}%
+
+\makeatother
+
+
+\begin{document}
+{
+%\usebackgroundtemplate{\includegraphics[width=\paperwidth]{Hartmann23.pdf}}
+ \begin{frame}[plain,noframenumbering]
+    \titlepage
+  \end{frame}
+}
+
+
+\begin{frame}
+  \frametitle{Qu'est ce qu'une épi-revue?}
+  \begin{block}{Source d'information }
+    CCSD : Centre pour la communication scientifique directe ((UMS CNRS 3668 INRIA, Université de Lyon.)
+    \href{https://www.ccsd.cnrs.fr/2013/01/episciences-de-quoi-sagit-il/}{https://www.ccsd.cnrs.fr/2013/01/episciences-de-quoi-sagit-il/}
+  \end{block}
+
+  
+  Le préfixe « épi » signifie « sur », « au-dessus ». (épi-centre, épigraphe)
+
+  \begin{block}{Une définition}
+    Une épi-revue est une  revue électronique en libre accès, alimentées par les articles déposés dans les archives ouvertes telles que HAL ou ArXiv, et non publiés par ailleurs.
+  \end{block}
+
+
+
+
+\end{frame}
+\begin{frame} \frametitle{Qu'est ce qu'une épi-revue?}
+  \begin{block}{En pratique}
+  \begin{itemize}
+  \item  Les comités éditoriaux des épi-revues organisent l’activité d’évaluation et de discussion scientifique des prépublications soumises ou sélectionnées.
+  \item Les épi-revues peuvent ainsi être considérées comme une « sur-couche » aux archives ouvertes ; elles y apportent une valeur ajoutée en apposant la caution scientifique d’un comité éditorial à chaque article retenu.
+  \item Les épi-revues peuvent être soit des nouveaux titres, soit des titres existants dont la politique d’accès permet de se joindre à la plate-forme.
+  \item Aucune cession de droit n’est signée avec les auteurs qui conservent leurs droits patrimoniaux sur leurs articles.
+  \end{itemize}
+\end{block}
+
+\begin{block}{Enjeu}
+  \begin{itemize}
+  \item Permettre de réaliser des revues à moindre coût et de
+    mettre en œuvre le libre accès aux versions électroniques des
+    articles.
+  \item Proposer ainsi une alternative aux modèles économiques existants, sans pour autant se placer en concurrence avec les éditeurs
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame} \frametitle{La plate-forme Episciences.org}
+  Une initiative du CCSD fortement soutenu par le CNRS et l'INRIA basée sur les archives ouvertes HAL, arXiv, CWI.
+  \begin{block}{Objectifs}
+    \begin{itemize}
+    \item Proposer un outil complet pour la gestion de la revue, son hébergement et la diffusion de ses contenus.
+    \item Proposer un ensemble de fonctionnalités personnalisables :
+      \begin{itemize}
+      \item Hébergement et personnalisation du site web (design,
+        contenu,\ldots)
+      \item Paramétrage de la revue (grille de relecture,
+        volumes, rubriques \ldots)
+      \item Gestion des utilisateurs et de leurs
+        rôles (secrétaire de rédaction, webmaster, relecteur,
+        relecteur invité, \ldots)
+      \item Gestion et suivi des relectures
+      \item Envoi de
+        mail (relance,\ldots)
+      \item Publication des articles
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Aujourd'hui}
+    \begin{itemize}
+    \item Hébergement de 10 épi-revues
+    \item Discussion pour une systèmes d'archive ouverte européenne
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+\begin{frame} \frametitle{Et en Mécanique ?}
+  \begin{block}{État des lieux}
+    \begin{itemize}
+    \item Très peu de revues en accés ouverts sans frais de publications (ou frais modérés)
+      \begin{itemize}
+      \item Journal of Mechanics of Materials and Structures
+      \item Memocs : Mathematics and Mechanics of Complex Systems
+      \item Latin American Journal of Solids and Structures
+      \item Journal of the Brazilian Society of Mechanical Sciences and Engineering
+      \item Archives of Mechanics
+      \item Quelques revues nationales (Hongrie, Jordanie, \ldots.)
+      \end{itemize}
+    \item La plupart des revues sont editées pas des editeurs commerciaux.
+      \begin{itemize}
+      \item Même les sociétés savantes ont laissé le travail d'édition aux éditeurs commerciaux
+        (IUTAM, EUROMECH, Académie des sciences, \ldots.)
+      \end{itemize}
+    \item Le plupart des revues ont un mode de fonctionnement engageant peu la communauté internationale.
+      Prédominance des revue anglo-saxonnes, comités éditoriaux fermés, \ldots.
+    \end{itemize}
+  \end{block}
+\end{frame}
+  
+\begin{frame}
+  \frametitle{Pourquoi pas une épi-revue en Mécanique?}
+  \begin{block}{Motivations}
+    \begin{itemize}
+    \item Besoin d'un modèle alternatif.
+    \item Peu de revues ouvertes
+    \item Soutien technique du CCSD
+    \end{itemize}
+  \end{block}
+  \begin{block}{Discussion et engagement de la communauté}
+    Au niveau national, démarrage d'une discussion sur Loomio\\[2mm]
+    \href{https://www.loomio.org/g/yPoIWNc5/for-an-epi-journal-in-mechanics}{https://www.loomio.org/g/yPoIWNc5/for-an-epi-journal-in-mechanics}
+  \end{block}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Pourquoi pas une épi-revue en Mécanique?}
+  \begin{block}{Élaboration d'un manifeste}
+    \begin{itemize}
+    \item Need for an epijournal in Mechanical engineering
+    \item Scope of the epijournal
+    \item Review procedure
+    \item Editorial management
+    \item Sustainable science
+    \item Ethics
+    \end{itemize}
+  \end{block}
+  \begin{block}{Périmètre d'une épi-revue}
+    La question du périmètre doit être débattue:
+    \begin{itemize}
+    \item Revue à large spectre.
+      \begin{itemize}
+      \item par exemple A/ Mécanique du solide et B/ Mécanique des fluides
+      \item création ensuite de sous sections.
+      \end{itemize}
+    \item Revues à périmètre resserré porté pas une communauté bien identifiée.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Pourquoi pas une épi-revue en Mécanique?}
+  \begin{block}{Management éditorial}
+    \begin{itemize}
+    \item A ton besoin d'un éditeur en chef ?
+    \item Comité scientifique international de premier plan
+    \item Comité d'éditeurs associés avec un rôle effectif.
+      \begin{itemize}
+      \item nommés ou élus (par la communauté ou par le comité
+        scientifique)
+      \item mandat de durée déterminée.
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Procédure de relecture}
+    \begin{itemize}
+    \item Processus de relecture anonyme ou non, doublement anonyme
+    \item Discussion des articles sur le site du journal des sa soumission
+    \end{itemize}
+  \end{block}
+\end{frame}
+\begin{frame}
+  \frametitle{Pourquoi pas une épi-revue en Mécanique?}
+  \begin{block}{Aspects éthiques}
+    \begin{itemize}
+    \item Rappel des régles européennes en terme d'éthique et de déontologie.
+    \item Veiller à éviter le plagiat (outil de scan)
+    \item Ne pas imposer des citations des articles du journal
+    \item Création d'un comité d'éthique
+    \item Sanction et communication en cas de non respect de ses régles. 
+    \end{itemize}
+  \end{block}
+  \begin{block}{Science durable et reproductible}
+    \begin{itemize}
+    \item Conservation et accés aux données d'expérience
+      \begin{itemize}
+      \item expérience de laboratoire \\
+        ``A manifesto for reproducible science'' Nature Human Behaviour 1, 2017
+      \item expérience numérique \\
+        ``Sustainable computational science: the ReScience initiative'' \href{https://arxiv.org/abs/1707.04393}{https://arxiv.org/abs/1707.04393}
+      \end{itemize}
+    \end{itemize}
+    
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Difficultés}
+  \begin{itemize}
+  \item Prise de conscience large de la communauté
+  \item Réunir et motiver un comité scientifique déjà bien occupé
+  \item Appui des sociétés savantes.
+  \item Indexation et reconnaissance du journal. (Recrutement des jeunes checheurs.)
+  \end{itemize}
+\end{frame}
+% {
+\begin{frame}[plain,noframenumbering]
+  \centerline{\Huge \textcolor{black}{Merci de votre attention}}
+\end{frame}
+% }
+
+%\include{PWL}
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
